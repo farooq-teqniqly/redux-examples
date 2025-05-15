@@ -1,17 +1,10 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "react",
-    "react-redux",
-    "redux-saga",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "react-redux", "redux-saga"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react-redux/recommended",
-    "plugin:redux-saga/recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:redux-saga/recommended"
   ],
   "env": {
     "browser": true,
@@ -27,13 +20,12 @@
     }
   },
   "rules": {
+    "react/react-in-jsx-scope": "off",
     "no-param-reassign": [
       "error",
       {
         "props": true,
-        "ignorePropertyModificationsFor": [
-          "state"
-        ]
+        "ignorePropertyModificationsFor": ["state"]
       }
     ]
   }
