@@ -15,6 +15,6 @@ export function* authSaga() {
   try {
     yield takeLatest(loginUser.type, handleLogin);
   } catch (error) {
-    console.error("Error in root saga:", error);
+    console.error("Error in auth saga:", error);
   }
 }
