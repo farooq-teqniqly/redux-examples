@@ -27,11 +27,12 @@ const authSlice = createSlice({
   selectors: {
     getUser: (state) => state.user,
     getStatus: (state) => state.status,
+    getError: (state) => state.error,
   },
 });
 
 export const { loginUser, loginUserSuccess, loginUserFailure } = authSlice.actions;
 
-export const { getUser, getStatus } = authSlice.selectors;
+export const { getUser, getStatus, getError } = authSlice.selectors;
 
 export const authReducer = authSlice.reducer;
