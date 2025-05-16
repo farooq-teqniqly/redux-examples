@@ -1,0 +1,33 @@
+{
+  "plugins": ["react", "react-redux", "redux-saga", "@tanstack/query"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-redux/recommended",
+    "plugin:redux-saga/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended"
+  ],
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": ["state"]
+      }
+    ]
+  }
+}

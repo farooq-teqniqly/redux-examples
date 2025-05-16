@@ -1,0 +1,37 @@
+{
+  "name": "react-vite-playwright-app",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .js,.jsx",
+    "test:e2e": "playwright test",
+    "test:component": "playwright test --project=component"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
+    "@tanstack/react-query": "^4.36.1",
+    "axios": "^1.9.0",
+    "bootstrap": "^5.3.2",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.10.2",
+    "react-dom": "^18.2.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.6.0",
+    "redux-saga": "^1.3.0"
+  },
+  "devDependencies": {
+    "@playwright/experimental-ct-react": "^1.43.1",
+    "@playwright/test": "^1.43.1",
+    "@tanstack/eslint-plugin-query": "^4.38.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-react": "^7.0.0",
+    "eslint-plugin-react-redux": "^3.0.0",
+    "eslint-plugin-redux-saga": "^1.0.0",
+    "prettier": "^3.0.0",
+    "vite": "^5.0.0"
+  }
+}
