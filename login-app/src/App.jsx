@@ -1,3 +1,17 @@
+import { useSelector } from "react-redux";
+import { Login } from "./Login";
+import { Welcome } from "./Welcome";
+import { getUser, getStatus } from "./auth/authSlice";
+
 export default function App() {
-  return <div>Hello World</div>;
+  const user = useSelector(getUser);
+  const status = useSelector(getStatus);
+
+  return (
+    <div>
+      {status === "pending" && <p>Logging in...</p>}
+      {!user && <Login />}
+      {user && <Welcome />}
+    </div>
+  );
 }
