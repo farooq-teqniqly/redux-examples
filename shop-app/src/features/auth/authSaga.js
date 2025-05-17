@@ -2,9 +2,9 @@ import { takeLatest, put, call } from "redux-saga/effects";
 import { loginRequest, loginSuccess, loginFailure } from "./authSlice";
 import { authApi } from "./authApi";
 
-function* fetchLoginRequestSaga(action) {
+function* fetchLoginRequestSaga({ payload }) {
   try {
-    const user = yield call(authApi.loginUser, action.payload);
+    const user = yield call(authApi.loginUser, payload);
     yield put(loginSuccess(user));
   } catch (error) {
     yield put(loginFailure(error.message));
