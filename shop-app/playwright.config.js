@@ -11,8 +11,11 @@ export default defineConfig({
     baseURL: "http://localhost:5173",
     trace: "on-first-retry",
     // Increase timeout if needed
-    actionTimeout: 10000,
-    navigationTimeout: 10000,
+    actionTimeout: 15000,
+    navigationTimeout: 15000,
+    expect: {
+      timeout: 15000,
+    },
   },
   webServer: {
     command: "npm run dev",

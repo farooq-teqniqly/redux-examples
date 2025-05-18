@@ -35,7 +35,7 @@ function AppRoutes() {
         }
       />
       <Route
-        path="/categories/:categoryId/products"
+        path="/categories/:categorySlug/products"
         element={
           <RequireAuth>
             <ProductsInCategory />

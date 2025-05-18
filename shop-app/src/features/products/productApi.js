@@ -11,6 +11,19 @@ const fetchProductCategories = async () => {
   }
 };
 
+const fetchProducts = async ({ category }) => {
+  try {
+    const res = await axios.get(`https://dummyjson.com/products/category/${category}`);
+    return res.data;
+  } catch (error) {
+    throw new Error(
+      error.response.data.message ||
+        `An error occurred while fetching products for category ${category}.`,
+    );
+  }
+};
+
 export const productApi = {
   fetchProductCategories,
+  fetchProducts,
 };

@@ -1,32 +1,31 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { logout } from '../auth/authSlice';
-import { useQuery } from '@tanstack/react-query';
-
-const fetchProductsByCategory = async (categoryId) => {
-  await new Promise(res => setTimeout(res, 300));
-  const products = {
-    '1': ['TV', 'Laptop'],
-    '2': ['Shirt', 'Shoes']
-  };
-  return products[categoryId] || [];
-};
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../auth/authSlice";
+import { fetchProductsRequest, getProducts } from "../products/productsSlice";
 
 export default function ProductsInCategory() {
-  const { categoryId } = useParams();
+  const { categorySlug } = useParams();
   const dispatch = useDispatch();
-  const { data: products = [], isLoading } = useQuery(['products', categoryId], () => fetchProductsByCategory(categoryId));
+  const { products, loading, error } = useSelector(getProducts);
+
+  useEffect(() => {
+    dispatch(fetchProductsRequest({ category: categorySlug }));
+  }, [dispatch, categorySlug]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  if (!products) return <p>No products found</p>;
 
   return (
-    <div style={{ padding: '1rem' }}>
-      <h2>Products in Category {categoryId}</h2>
+    <div style={{ padding: "1rem" }}>
+      <h2>Products in Category {categorySlug}</h2>
       <button onClick={() => dispatch(logout())}>Logout</button>
-      {isLoading ? <p>Loading...</p> : (
-        <ul>
-          {products.map((p, i) => <li key={i}>{p}</li>)}
-        </ul>
-      )}
+      <ul>
+        {products?.map((p) => (
+          <li key={p.id}>{p.title}</li>
+        ))}
+      </ul>
     </div>
   );
 }
