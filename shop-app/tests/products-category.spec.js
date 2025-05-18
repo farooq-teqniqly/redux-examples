@@ -2,20 +2,22 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Products in Category Page", () => {
   test.beforeEach(async ({ page }) => {
-    // Start from homepage
+    // Setup: Start each test with a logged-in user
+    // 1. Navigate to homepage
     await page.goto("/");
 
-    // Login
+    // 2. Perform login with valid credentials
     await page.getByPlaceholder("Username").fill("emilys");
     await page.getByPlaceholder("Password").fill("emilyspass");
     await page.getByRole("button", { name: "Login" }).click();
 
-    // Wait for navigation to categories page
+    // 3. Ensure we're on the categories page
     await page.waitForURL("/categories");
   });
 
   test("should display products for a category", async ({ page }) => {
-    // Setup request interception to ensure API call succeeds
+    // Test successful product listing:
+    // 1. Mock API response with test products
     await page.route("**/products/category/**", async (route) => {
       await route.fulfill({
         status: 200,
@@ -28,27 +30,28 @@ test.describe("Products in Category Page", () => {
       });
     });
 
-    // Click first category link
+    // 2. Navigate to a specific category
     const firstCategory = page.locator("a").first();
     await firstCategory.waitFor({ state: "visible" });
     const categoryHref = await firstCategory.getAttribute("href");
     await firstCategory.click();
 
-    // Wait for navigation to products page
+    // 3. Verify navigation was successful
     await page.waitForURL(`**${categoryHref}`);
 
-    // Basic UI elements should be visible
+    // 4. Verify page structure and navigation elements
     await expect(page.getByRole("heading", { level: 2 })).toBeVisible();
     await expect(page.getByRole("button", { name: "Logout" })).toBeVisible();
 
-    // Wait for products to load and verify
+    // 5. Verify products are displayed correctly
     const productItems = page.locator("li");
     await expect(productItems).toHaveCount(2);
     await expect(productItems.first()).toHaveText("Test Product 1");
   });
 
   test("should handle loading state", async ({ page }) => {
-    // Setup delayed response to ensure loading state is visible
+    // Test loading state display:
+    // 1. Mock delayed API response to ensure loading state is visible
     await page.route("**/products/category/**", async (route) => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await route.fulfill({
@@ -59,17 +62,18 @@ test.describe("Products in Category Page", () => {
       });
     });
 
-    // Click first category
+    // 2. Navigate to category
     const firstCategory = page.locator("a").first();
     await firstCategory.waitFor({ state: "visible" });
     await firstCategory.click();
 
-    // Loading state should be visible
+    // 3. Verify loading indicator is shown
     await expect(page.getByText("Loading...")).toBeVisible();
   });
 
   test("should handle error state", async ({ page }) => {
-    // Setup error response
+    // Test error handling:
+    // 1. Mock API error response
     await page.route("**/products/category/**", (route) =>
       route.fulfill({
         status: 500,
@@ -83,24 +87,26 @@ test.describe("Products in Category Page", () => {
       }),
     );
 
-    // Click first category
+    // 2. Navigate to category
     const firstCategory = page.locator("a").first();
     await firstCategory.waitFor({ state: "visible" });
     await firstCategory.click();
 
+    // 3. Verify error message is displayed
     await expect(page.locator('p[style*="color: red"]')).toBeVisible();
   });
 
   test("should handle logout", async ({ page }) => {
-    // Click first category
+    // Test logout functionality:
+    // 1. Navigate to a category
     const firstCategory = page.locator("a").first();
     await firstCategory.waitFor({ state: "visible" });
     await firstCategory.click();
 
-    // Click logout
+    // 2. Perform logout action
     await page.getByRole("button", { name: "Logout" }).click();
 
-    // Should redirect to login page
+    // 3. Verify redirect to login page
     await page.waitForURL("/");
     await expect(page.getByRole("heading", { name: "Login" })).toBeVisible();
   });
