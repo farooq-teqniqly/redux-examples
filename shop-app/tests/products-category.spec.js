@@ -1,14 +1,17 @@
 import { test, expect } from "@playwright/test";
+import { TEST_CREDENTIALS } from "./test-utilsl";
 
 test.describe("Products in Category Page", () => {
+  const { user, password } = TEST_CREDENTIALS;
+
   test.beforeEach(async ({ page }) => {
     // Setup: Start each test with a logged-in user
     // 1. Navigate to homepage
     await page.goto("/");
 
     // 2. Perform login with valid credentials
-    await page.getByPlaceholder("Username").fill("emilys");
-    await page.getByPlaceholder("Password").fill("emilyspass");
+    await page.getByPlaceholder("Username").fill(user);
+    await page.getByPlaceholder("Password").fill(password);
     await page.getByRole("button", { name: "Login" }).click();
 
     // 3. Ensure we're on the categories page

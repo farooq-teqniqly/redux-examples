@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
-
-const user = "emilys";
-const password = "emilyspass";
+import { TEST_CREDENTIALS } from "./test-utilsl";
 
 test.describe("Login Flow", () => {
+  const { user, password } = TEST_CREDENTIALS;
+
   // Before each test, navigate to home page and ensure login form is loaded
   test.beforeEach(async ({ page }) => {
     await page.goto("/");

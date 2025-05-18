@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
-
-const user = "emilys";
-const password = "emilyspass";
+import { TEST_CREDENTIALS } from "./test-utilsl";
 
 test.describe("Categories Route Protection", () => {
+  const { user, password } = TEST_CREDENTIALS;
+
   // Before each test, navigate to the home page and wait for the login form to be visible
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
