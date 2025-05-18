@@ -135,3 +135,5 @@ dist
 .pnp.*
 
 .idea/
+playwright-report/
+test-results/
